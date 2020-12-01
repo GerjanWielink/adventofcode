@@ -13,7 +13,7 @@ fun main() {
   val time2sum = measureTimeMillis {
     val result = find2sum(inputNumbers, 2020)
     if (result != null) println("${result.first} * ${result.second} = ${result.first * result.second}")
-      else println("Not found...")
+    else println("Not found...")
   }
 
   println("Took $time2sum ms")
@@ -28,15 +28,21 @@ fun main() {
 
 }
 
-fun find2sum(inputNumbers: List<Long>, target: Long) : Pair<Long, Long>? {
+fun find2sum(inputNumbers: List<Long>, target: Long): Pair<Long, Long>? {
   // convert the list to a hash set for fast lookup
-  val inputAsHashSet = inputNumbers.toHashSet()
-  // check if the hashSet contains the number we need
-  val number = inputNumbers.find { inputAsHashSet.contains(target - it) }
-  return if (number != null) Pair(number, target - number) else null
+  val encounteredNumbers = HashSet<Long>()
+  inputNumbers.forEach {
+    // check if the hashSet contains the number we need
+    if (encounteredNumbers.contains(target - it)) {
+      return Pair(it, target - it)
+    }
+    // add the number to the set
+    encounteredNumbers.add(it)
+  }
+  return null
 }
 
-fun find3sum(inputNumbers: List<Long>, target: Long) : Triple<Long, Long, Long>? {
+fun find3sum(inputNumbers: List<Long>, target: Long): Triple<Long, Long, Long>? {
   // we'll need at least 3 numbers
   if (inputNumbers.size < 3) return null
 
