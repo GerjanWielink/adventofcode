@@ -4,11 +4,8 @@ import io.loadFileAsLongs
 import kotlin.system.measureTimeMillis
 
 /**
- * Took some inspiration from
- * https://paulrohan.medium.com/solving-the-classic-two-sum-and-three-sum-problem-in-javascript-7d5d1d47db03
+ * Took some inspiration from https://coderbyte.com/algorithm/two-sum-problem
  * for the find2sum.
- *
- * Too lazy to read their solution to find3sum :)
  */
 fun main() {
   val inputNumbers = loadFileAsLongs("exercise1")
