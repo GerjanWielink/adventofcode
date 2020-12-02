@@ -2,9 +2,11 @@ package io
 
 import Main
 
-fun loadFileAsLongs(fileName: String) : List<Long> = Main::class.java
-    .getResource(fileName)
-    .readText()
-    .split("\r\n")
-    .filter { it.matches("\\d+".toRegex())}
-    .map { it.toLong() }
+fun loadFileAsStrings(fileName: String) : List<String> = Main::class.java
+  .getResource(fileName)
+  .readText()
+  .split("\r\n")
+
+fun loadFileAsLongs(fileName: String) : List<Long> = loadFileAsStrings(fileName)
+  .filter { it.matches("\\d+".toRegex())}
+  .map { it.toLong() }
