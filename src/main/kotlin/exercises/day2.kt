@@ -23,6 +23,6 @@ fun isValidPasswordSecond(line: String) : Boolean {
 
 fun unpackPasswordLine(line: String) : List<String> = """^(\d+)-(\d+) ([a-z]): ([a-z]+)$"""
   .toRegex()
-  .find(line)!! // :')
-  .destructured
-  .toList()
+  .find(line)
+  ?.destructured
+  ?.toList() ?: error("Invalid line encountered: $line")
