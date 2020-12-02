@@ -21,7 +21,7 @@ fun isValidPasswordSecond(line: String) : Boolean {
   return (password[pos1.toInt() - 1].toString() == char) != (password[pos2.toInt() - 1].toString() == char)
 }
 
-fun unpackPasswordLine(line: String) : List<String> = "^(\\d+)-(\\d+) ([a-z]): ([a-z]+)$"
+fun unpackPasswordLine(line: String) : List<String> = """^(\d+)-(\d+) ([a-z]): ([a-z]+)$"""
   .toRegex()
   .find(line)!! // :')
   .destructured
