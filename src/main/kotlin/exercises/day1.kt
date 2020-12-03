@@ -8,7 +8,7 @@ import kotlin.system.measureTimeMillis
  * for the find2sum.
  */
 fun main() {
-  val inputNumbers = loadFileAsLongs("exercise1")
+  val inputNumbers = loadFileAsLongs("day1")
 
   val time2sum = measureTimeMillis {
     val result = find2sum(inputNumbers, 2020)
@@ -29,14 +29,12 @@ fun main() {
 }
 
 fun find2sum(inputNumbers: List<Long>, target: Long): Pair<Long, Long>? {
-  // convert the list to a hash set for fast lookup
   val encounteredNumbers = HashSet<Long>()
+
   inputNumbers.forEach {
-    // check if the hashSet contains the number we need
     if (encounteredNumbers.contains(target - it)) {
       return Pair(it, target - it)
     }
-    // add the number to the set
     encounteredNumbers.add(it)
   }
   return null

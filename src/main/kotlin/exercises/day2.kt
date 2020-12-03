@@ -15,6 +15,7 @@ fun isValidPasswordFirst(line: String) : Boolean {
   return  password.count { it.toString() == char} in (minStr.toInt() .. maxStr.toInt())
 }
 
+
 fun isValidPasswordSecond(line: String) : Boolean {
   val (pos1, pos2, char, password) = unpackPasswordLine(line)
 
