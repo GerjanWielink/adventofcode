@@ -6,7 +6,7 @@ fun main() {
   val input = loadFileAsString("day4")
 
   input
-    .split("""\r\n\r\n""".toRegex())
+    .split("""(\r?\n){2}""".toRegex())
     .count {
       it
         .split("""[\s(\r\n)]""".toRegex())
@@ -14,7 +14,7 @@ fun main() {
     }.let(::println)
 
   // as oneliner :')
-  loadFileAsString("day4").split("""\r\n\r\n""".toRegex()).count { """((byr:((19[2-9]\d)|(200[0-2])))|(iyr:(20((1\d)|20)))|(eyr:(20((2\d)|30)))|(hgt:((1(([5-8]\d)|(9[0-3]))cm)|(((59)|(6\d)|(7[0-6]))in)))|(hcl:#[\da-f]{6})|(ecl:(amb|blu|brn|gry|grn|hzl|oth))|(pid:\d{9}))(\s|(\r\n)|$)""".toRegex().findAll(it).count() == 7 }.let(::println)
+  loadFileAsString("day4").split("""(\r?\n){2}""".toRegex()).count { """((byr:((19[2-9]\d)|(200[0-2])))|(iyr:(20((1\d)|20)))|(eyr:(20((2\d)|30)))|(hgt:((1(([5-8]\d)|(9[0-3]))cm)|(((59)|(6\d)|(7[0-6]))in)))|(hcl:#[\da-f]{6})|(ecl:(amb|blu|brn|gry|grn|hzl|oth))|(pid:\d{9}))(\s|(\r?\n)|$)""".toRegex().findAll(it).count() == 7 }.let(::println)
 }
 
 fun simpleValidator(entry: String) = entry.matches(
