@@ -7,7 +7,7 @@ fun main() {
 
   val validPassports = input
     .split("""\r\n\r\n""".toRegex())
-    .count { validatePassword(it, ::simpleValidator) }
+    .count { validatePassword(it, ::advancedValidator) }
 
   println(validPassports)
 }
@@ -24,13 +24,10 @@ fun simpleValidator(entry: String) = entry.matches(
 
 fun advancedValidator(entry: String) = entry.split(":").let { (key, value) ->
   when (key) {
-    "byr" -> value.matches(Regex("""^\d{4}$""")) && value.toInt() in (1920..2002)
-    "iyr" -> value.matches(Regex("""^\d{4}$""")) && value.toInt() in (2010..2020)
-    "eyr" -> value.matches(Regex("""^\d{4}$""")) && value.toInt() in (2020..2030)
-    "hgt" ->
-      Regex("""^(\d+)(cm|in)$""").find(value)?.destructured?.let { (height, type) ->
-        if (type == "cm") height.toInt() in (150..193) else height.toInt() in (59..76)
-      } ?: false
+    "byr" -> value.matches(Regex("""(19[2-9]\d)|(200[0-2])$""")) // 1929-2002
+    "iyr" -> value.matches(Regex("""^20((1\d)|20)$""")) // 2010-2020
+    "eyr" -> value.matches(Regex("""^20((2\d)|30)$""")) // 2020-2030
+    "hgt" -> value.matches(Regex("""^((1(([5-8]\d)|(9[0-3]))cm)|((59)|(6\d)|(7[0-6]))in)$""")) // 59in-76in || 150cm - 193cm
     "hcl" -> value.matches(Regex("""^#[0-9a-f]{6}$"""))
     "ecl" -> value.matches(Regex("""^(amb|blu|brn|gry|grn|hzl|oth)$"""))
     "pid" -> value.matches(Regex("""^\d{9}$"""))
