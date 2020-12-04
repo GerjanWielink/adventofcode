@@ -14,6 +14,9 @@ fun main() {
     }
 
   println(validPassports)
+
+  // as oneliner :')
+  loadFileAsString("day4").split("""\r\n\r\n""".toRegex()).count { it.split("""[\s(\r\n)]""".toRegex()).count { entry -> """(^byr:((19[2-9]\d)|(200[0-2]))$)|(^iyr:(20((1\d)|20))$)|(^eyr:(20((2\d)|30))$)|(^hgt:((1(([5-8]\d)|(9[0-3]))cm)|(((59)|(6\d)|(7[0-6]))in))$)|(^hcl:#[\da-f]{6}$)|(^ecl:(amb|blu|brn|gry|grn|hzl|oth)$)|(^pid:\d{9}$)""".toRegex().matches(entry) } == 7 }.let(::println)
 }
 
 fun simpleValidator(entry: String) = entry.matches(
@@ -32,4 +35,3 @@ fun advancedValidator(entry: String) = listOf(
       """^ecl:(amb|blu|brn|gry|grn|hzl|oth)$""".toRegex(),
       """^pid:\d{9}$""".toRegex()
 ).any { it.matches(entry) }
-
