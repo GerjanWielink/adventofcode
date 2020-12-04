@@ -13,7 +13,7 @@ fun main() {
         .count { entry -> advancedValidator(entry) } == 7
     }.let(::println)
 
-  // as oneliner :')
+  // as a single regular expression!
   """((byr:(19[2-9]\d|200[0-2])|iyr:20(1\d|20)|eyr:20(2\d|30)|hgt:((1([5-8]\d|9[0-3])cm|(59|6\d|7[0-6])in))|hcl:#[\da-f]{6}|ecl:(amb|blu|brn|gry|grn|hzl|oth)|pid:\d{9})(\s|\r\n)(cid:[a-z0-9]+(\s|\r\n))?){7}""".toRegex().findAll(loadFileAsString("day4")).count().let(::println)
 }
 
