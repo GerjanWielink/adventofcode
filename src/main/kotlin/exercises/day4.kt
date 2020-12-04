@@ -30,8 +30,8 @@ fun advancedValidator(entry: String) = entry.split(":").let { (key, value) ->
     "byr" -> value.matches(Regex("""(19[2-9]\d)|(200[0-2])$""")) // 1929-2002
     "iyr" -> value.matches(Regex("""^20((1\d)|20)$""")) // 2010-2020
     "eyr" -> value.matches(Regex("""^20((2\d)|30)$""")) // 2020-2030
-    "hgt" -> value.matches(Regex("""^((1(([5-8]\d)|(9[0-3]))cm)|((59)|(6\d)|(7[0-6]))in)$""")) //  150-193cm || 59-76in
-    "hcl" -> value.matches(Regex("""^#[0-9a-f]{6}$"""))
+    "hgt" -> value.matches(Regex("""^(1(([5-8]\d)|(9[0-3]))cm)|(((59)|(6\d)|(7[0-6]))in)$""")) //  150-193cm || 59-76in
+    "hcl" -> value.matches(Regex("""^#[\da-f]{6}$"""))
     "ecl" -> value.matches(Regex("""^(amb|blu|brn|gry|grn|hzl|oth)$"""))
     "pid" -> value.matches(Regex("""^\d{9}$"""))
     else -> false // ignoring cid and always setting it to false allows to just check for length 7
