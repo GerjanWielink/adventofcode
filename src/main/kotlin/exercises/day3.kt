@@ -5,7 +5,7 @@ import io.loadFileAsStrings
 fun main () {
   val input = loadFileAsStrings("day3")
 
-  println(countBottomWalk(Pair(0,0), input, 0, Pair(3, 1)))
+  println("Part 1: ${countBottomWalk(Pair(0,0), input, 0, Pair(3, 1))}")
 
   val result = listOf(
     Pair(1, 1),
@@ -15,9 +15,9 @@ fun main () {
     Pair(1, 2)
   )
     .map { countBottomWalk(Pair(0,0), input, 0, it) }
-    .reduce{ acc, i -> acc * i }
+    .reduce(Long::times)
 
-  println(result)
+  println("Part 2: $result")
 }
 
 fun countBottomWalk(coordinates: Pair<Int, Int>, board: List<String>, encounteredTrees: Long, slope: Pair<Int, Int>) : Long {

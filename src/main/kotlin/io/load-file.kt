@@ -2,9 +2,11 @@ package io
 
 import Main
 
-fun loadFileAsStrings(fileName: String) : List<String> = Main::class.java
+fun loadFileAsString(fileName: String) : String = Main::class.java
   .getResource(fileName)
   .readText()
+
+fun loadFileAsStrings(fileName: String) : List<String> = loadFileAsString(fileName)
   .split("\r\n")
 
 fun loadFileAsLongs(fileName: String) : List<Long> = loadFileAsStrings(fileName)
