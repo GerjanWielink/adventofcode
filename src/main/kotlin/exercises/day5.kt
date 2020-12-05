@@ -9,10 +9,12 @@ fun main () {
       it.slice(7..9).replace('R', '1').replace('L', '0').toInt(2)
     }
 
+  // part 1
   seatIds
     .maxOrNull()
     ?.let { println("Part 1: $it") }
 
+  // part 2
   seatIds
     .sorted().zipWithNext()
     .find { it.second - it.first != 1 }
