@@ -1,7 +1,7 @@
 package exercises
 
 import io.loadFileAsStrings
-// 832, 517
+
 fun main () {
   loadFileAsStrings("day5")
     .map { it.map { c -> if (c in setOf('B', 'R')) '1' else '0' }.joinToString("").toInt(2) }
