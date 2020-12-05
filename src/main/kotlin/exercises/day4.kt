@@ -7,7 +7,6 @@ fun main() {
 
   input
     .split("""(\r?\n){2}""".toRegex())
-    .count {
     .count { it
         .split("""[\s(\r\n)]""".toRegex())
         .count { entry -> advancedValidator(entry) } == 7
