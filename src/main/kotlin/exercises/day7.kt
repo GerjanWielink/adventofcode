@@ -7,17 +7,13 @@ fun main() {
     .map(::getBagsMap)
     .toMap()
 
-  bags.keys.count { canContainShinyGold(it, bags) }.let(::println)
-  countContainedBags("shiny gold", bags).let(::println)
+  bags.keys.count { canContainShinyGold(it, bags) }.let { println("Part 1: $it")}
+  countContainedBags("shiny gold", bags).let { println("Part 2: $it")}
 
 }
 
 fun countContainedBags(color: String, bagsMap: Map<String, Map<String, Int>>) : Long {
-  if (!bagsMap.containsKey(color) || bagsMap[color]?.keys?.size == 0) {
-    return 0
-  }
-
-  return (bagsMap[color]?.values?.reduce(Int::plus)?.toLong() ?: 0L) + (bagsMap[color]?.map { it.value * countContainedBags(it.key, bagsMap) }?.reduce(Long::plus) ?: 0L)
+  return (bagsMap[color]?.map { it.value +  it.value * countContainedBags(it.key, bagsMap) }?.fold(0, Long::plus) ?: 0L)
 }
 
 fun canContainShinyGold(color: String, bagsMap: Map<String, Map<String, Int>>): Boolean {
