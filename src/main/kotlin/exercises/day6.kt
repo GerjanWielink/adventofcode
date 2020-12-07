@@ -4,15 +4,13 @@ import io.loadFileAsString
 
 fun main() {
   val forms : List<String> = loadFileAsString("day6")
-    .split("""\r?\n\r?\n""".toRegex())
+    .split("""(\r?\n){2}""".toRegex())
 
   forms
-    .map { it.replace("""\r?\n""".toRegex(), "").toCharArray().toSet().size }
-    .reduce(Int::plus)
-    .let { println("Part 1: $it") }
+    .map { it.replace("""[^\w]""".toRegex(), "").toCharArray().toSet().size }
+    .reduce(Int::plus).let { println("Part 1: $it") }
 
   forms
-    .map { it.lines().map{ e -> e.toCharArray().toSet() }.reduce{ acc, set -> set.intersect(acc)}.size }
-    .reduce{ acc, i -> acc + i}
-    .let { println("Part 2: $it")}
+    .map { it.lines().map{ e -> e.toCharArray().toSet() }.reduce{ acc, set -> set.intersect(acc) }.size }
+    .reduce{ acc, i -> acc + i}.let { println("Part 2: $it")}
 }
