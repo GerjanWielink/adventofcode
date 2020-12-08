@@ -2,22 +2,24 @@ package exercises
 
 import io.loadFileAsStrings
 
+
 fun main() {
   val instructions = loadFileAsStrings("day8")
 
-  Program(instructions).let {
-    it.run()
-    println("Part 1: ${it.accumulator}")
-  }
+  println("Part 1: ${Program(instructions).run().second}")
 
-  instructions.withIndex().forEach { (idx, instruction) ->
-    val list = instructions.toMutableList()
-    list[idx] = flipInstruction(instruction)
+  run {
+    instructions.withIndex().forEach { (idx, instruction) ->
+      if (instruction.startsWith("acc")) return@forEach
 
-    Program(list).let {
-      if (it.run() == 0) {
-        println("Part 2: ${it.accumulator}")
-        return@forEach
+      val modifiedInstructions = instructions.toMutableList()
+      modifiedInstructions[idx] = flipInstruction(instruction)
+
+      Program(modifiedInstructions).run().let { (exitCode, value) ->
+        if(exitCode == 0) {
+          println("Part 2: $value")
+          return@run
+        }
       }
     }
   }
@@ -32,7 +34,8 @@ fun flipInstruction(instruction: String) = instruction
 class Program(
   private val instructions: List<String>
 ) {
-  var accumulator = 0
+
+  private var acc = 0
   private var pointer = 0
   private val encounteredPointers = HashSet<Int>()
 
@@ -43,17 +46,17 @@ class Program(
    * - 1: Out of bounds instruction
    * - 2: Loop detected
    */
-  fun run(): Int {
-    if (pointer == instructions.size) return 0
-    if (pointer > instructions.size) return 1
-    if (encounteredPointers.contains(pointer)) return 2
+  fun run(): Pair<Int, Int> {
+    if (pointer == instructions.size) return Pair(0, acc)
+    if (pointer > instructions.size) return Pair(1, acc)
+    if (encounteredPointers.contains(pointer)) return Pair(2, acc)
 
     encounteredPointers.add(pointer)
 
     val (instruction, value) = parseInstruction(instructions[pointer])
     when (instruction) {
       "acc" -> {
-        accumulator += value
+        acc += value
         pointer += 1
       }
       "jmp" -> pointer += value
