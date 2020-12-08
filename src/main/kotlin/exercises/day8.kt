@@ -29,10 +29,6 @@ fun flipInstruction(instruction: String) = instruction
   .toLowerCase()
 
 
-enum class Instruction {
-  acc, jmp, nop
-}
-
 class Program(
   private val instructions: List<String>
 ) {
@@ -43,30 +39,31 @@ class Program(
 
   /**
    * Returns exit code
-   * - 0: Gracefull execution
-   * - 1: Loop detected
-   * - 2: Outofbounds instruction
+   * - 0: Graceful execution
+   * - 1: Out of bounds instruction
+   * - 2: Loop detected
    */
   fun run(): Int {
     if (pointer == instructions.size) return 0
-    if (encounteredPointers.contains(pointer)) return 1
-    if (pointer > instructions.size) return 2
+    if (pointer > instructions.size) return 1
+    if (encounteredPointers.contains(pointer)) return 2
 
     encounteredPointers.add(pointer)
 
     val (instruction, value) = parseInstruction(instructions[pointer])
     when (instruction) {
-      Instruction.acc -> {
+      "acc" -> {
         accumulator += value
         pointer += 1
       }
-      Instruction.jmp -> pointer += value
-      Instruction.nop -> pointer += 1
+      "jmp" -> pointer += value
+      "nop" -> pointer += 1
+      else -> throw Exception("Invalid instruction: [$instruction]")
     }
 
     return run()
   }
 
-  private fun parseInstruction(line: String): Pair<Instruction, Int> =
-    line.split(" ").let { Pair(Instruction.valueOf(it[0]), it[1].toInt()) }
+  private fun parseInstruction(line: String): Pair<String, Int> =
+    line.split(" ").let { Pair(it[0], it[1].toInt()) }
 }
