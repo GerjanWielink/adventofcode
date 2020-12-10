@@ -12,15 +12,15 @@ fun main() {
 }
 
 fun countArrangements(adapters: List<Int>): Long {
- val map : MutableMap<Int, Long> = mutableMapOf(0 to 1)
+ val intermediateCounts = mutableMapOf(0 to 1L).withDefault { 0L }
 
   adapters.sorted().forEach { adapter ->
     adapters
       .filter { it in (adapter + 1 .. adapter + 3) }
-      .forEach { map[it] = (map[it] ?: 0L) + (map[adapter] ?: 0L) }
+      .forEach { intermediateCounts[it] = intermediateCounts.getValue(it) + intermediateCounts.getValue(adapter) }
   }
 
-  return map[adapters.maxOrNull() ?: 0] ?: 0L
+  return intermediateCounts.getValue(adapters.maxOrNull() ?: 0)
 }
 
 fun countJoltageDifference(adapters: List<Int>): Int = adapters
