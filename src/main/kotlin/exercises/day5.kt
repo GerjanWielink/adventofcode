@@ -1,6 +1,6 @@
 package exercises
 
-import io.loadFileAsStrings
+import util.loadFileAsStrings
 
 fun main () {
   loadFileAsStrings("day5")

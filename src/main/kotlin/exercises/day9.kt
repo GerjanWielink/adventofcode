@@ -1,6 +1,6 @@
 package exercises
 
-import io.loadFileAsLongs
+import util.loadFileAsLongs
 
 fun main() {
   val input = loadFileAsLongs("day9")

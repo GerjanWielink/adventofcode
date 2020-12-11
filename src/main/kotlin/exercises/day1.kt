@@ -1,6 +1,6 @@
 package exercises
 
-import io.loadFileAsLongs
+import util.loadFileAsLongs
 import kotlin.system.measureTimeMillis
 
 /**

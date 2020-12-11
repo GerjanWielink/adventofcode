@@ -1,6 +1,6 @@
 package exercises
 
-import io.loadFileAsStrings
+import util.loadFileAsStrings
 
 fun main() {
   val bags = loadFileAsStrings("day7")

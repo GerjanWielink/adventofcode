@@ -1,6 +1,6 @@
 package exercises
 
-import io.loadFileAsString
+import util.loadFileAsString
 
 fun main() {
   val forms : List<String> = loadFileAsString("day6")
