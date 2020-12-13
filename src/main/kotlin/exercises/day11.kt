@@ -1,17 +1,21 @@
 package exercises
 
 import util.loadFileAsString
+import kotlin.system.measureNanoTime
+import kotlin.system.measureTimeMillis
+
 
 fun main() {
   val input = loadFileAsString("day11")
 
   val game = GameOfLife(input)
 
-  while (game.iterate()) {}
 
-  println(game.state.count{ it == '#' })
+  measureTimeMillis {
+    game.iterateUntilStable()
+  }.let{ println("$it ms")}
 
-
+  println(game.state.count { it == '#' })
 }
 
 class GameOfLife(input: String) {
@@ -21,9 +25,9 @@ class GameOfLife(input: String) {
   private var previousState = ""
   var state = input
 
-  fun iterate() : Boolean {
+  fun iterateUntilStable() {
     val newState = state.mapIndexed { index, seat ->
-      when(seat) {
+      when (seat) {
         '#' -> if (countVisibleOccupiedSeats(index) >= 5) 'L' else '#'
         'L' -> if (countVisibleOccupiedSeats(index) == 0) '#' else 'L'
         else -> seat
@@ -33,16 +37,18 @@ class GameOfLife(input: String) {
     previousState = state
     state = newState
 
-    return state != previousState
+    if (state != previousState) iterateUntilStable()
   }
 
-  private fun countVisibleOccupiedSeats(idx: Int) : Int {
-    return (-1 .. 1).map { deltaCol -> (-1 .. 1).map{ deltaRow ->
-      occupiedSeatVisibleInDirection(idx, Pair(deltaRow, deltaCol))
-    }}.flatten().count { it }
+  private fun countVisibleOccupiedSeats(idx: Int): Int {
+    return (-1..1).map { deltaCol ->
+      (-1..1).map { deltaRow ->
+        occupiedSeatVisibleInDirection(idx, Pair(deltaRow, deltaCol))
+      }
+    }.flatten().count { it }
   }
 
-  private fun occupiedSeatVisibleInDirection(idx: Int, direction: Pair<Int, Int>) : Boolean {
+  private fun occupiedSeatVisibleInDirection(idx: Int, direction: Pair<Int, Int>): Boolean {
     if (direction == Pair(0, 0)) {
       return false
     }
@@ -59,17 +65,19 @@ class GameOfLife(input: String) {
     }
   }
 
-  private fun countAdjacentOccupiedSeats(idx: Int) : Int {
+  private fun countAdjacentOccupiedSeats(idx: Int): Int {
     val (row, col) = getRowColFromIdx(idx) ?: error("Invalid index: $idx")
 
-    return (-1 .. 1).map { deltaCol -> (-1 .. 1).map{ deltaRow ->
-      if (deltaCol == 0 && deltaRow == 0)
-        false
-      else getSeat(row + deltaRow, col + deltaCol) == '#'
-    }}.flatten().count { it }
+    return (-1..1).map { deltaCol ->
+      (-1..1).map { deltaRow ->
+        if (deltaCol == 0 && deltaRow == 0)
+          false
+        else getSeat(row + deltaRow, col + deltaCol) == '#'
+      }
+    }.flatten().count { it }
   }
 
-  private fun getSeat(row: Int, col: Int) : Char? {
+  private fun getSeat(row: Int, col: Int): Char? {
     if (row >= rows || col >= columns || col < 0 || row < 0 || (col == columns - 1 && row == rows - 1)) {
       return null
     }
