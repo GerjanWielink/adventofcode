@@ -1,5 +1,4 @@
-lines = File.readlines("input")
-            .map{|l| l.split(" -> ").map{|side| side.split(",").map(&:to_i)}}
+lines = File.readlines("input_5").map{|l| l.split(" -> ").map{|side| side.split(",").map(&:to_i)}}
 
 bounds = [
   lines.map{|l| [l[0][0], l[1][0]]}.reduce(&:+).max,

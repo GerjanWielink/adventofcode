@@ -1,4 +1,4 @@
-input = File.readlines('input')
+input = File.readlines('input_3')
 
 input
   .map{|l| l.scan /\w/}

@@ -1,4 +1,4 @@
-input = File.read('input')
+input = File.read('input_4')
 
 
 numbers_drawn =  input[/^(.*)\n\n/, 1].split(',')
